@@ -1,6 +1,6 @@
 # roundabout
 
-A Clojure library designed for flow control.
+A Clojure and Clojurescript library designed for flow control.
 
 ## Usage
 
@@ -9,6 +9,10 @@ a medium that doesn't expose feedback. The test has a pretty good
 example where an unbounded LinkedBlockingQueue stands in for such a
 medium. The test example passes feedback via a shared core.async
 channel, but it doesn't have to.
+
+Ultimately what `sender` and `receiver` do is limit the number of
+messages inflight between the input of sender and the output of
+receiver to window-size.
 
 ## Further reading
 
