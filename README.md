@@ -10,6 +10,11 @@ example where an unbounded LinkedBlockingQueue stands in for such a
 medium. The test example passes feedback via a shared core.async
 channel, but it doesn't have to.
 
+## Further reading
+
+https://code.google.com/p/chromium/issues/detail?id=492519
+https://lists.w3.org/Archives/Public/public-whatwg-archive/2013Oct/0217.html
+
 ## License
 
 Copyright © 2015 Kevin Downey

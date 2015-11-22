@@ -29,14 +29,14 @@
    :feedback feedback
    :abort abort})
 
-;; TODO: timeout
 (defn receiver
-  "Takes 4 channels and a number. Sends window-size to the feedback
+  "Takes 4 channels and 2 numbers. Sends window-size to the feedback
   channel. Reads window-size items from the input channel and writes
   them to the output channel, then sends window-size to feedback
-  again, in a loop. Returns a map of arguments minus
-  window-size. window-size has an effect similar to buffer size for a
-  core.async channel."
+  again, in a loop. Returns a map of arguments minus window-size. If
+  timeout milliseconds elapse while waiting for input, sends another
+  feedback message. `window-size` has an effect similar to buffer size
+  for a core.async channel."
   [input output feedback abort window-size timeout]
   (async/go-loop [n window-size]
     (if (> n (dec window-size))
@@ -51,7 +51,7 @@
                      abort nil)))
         (async/timeout timeout) (async/alt!
                                   abort nil
-                                  [[feedback window-size]] ([_] (recur n)))
+                                  [[feedback (- window-size n)]] ([_] (recur n)))
         abort nil)))
   {:input input
    :output output
