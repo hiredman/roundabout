@@ -1,5 +1,12 @@
-(ns com.manigfeald.roundabout
-  (:require [clojure.core.async :as async]))
+#? (:clj
+    (ns com.manigfeald.roundabout
+      (:require [clojure.core.async
+                 :refer [alt! go-loop]
+                 :as async]))
+    :cljs
+    (ns com.manigfeald.roundabout
+      (:require [cljs.core.async :as async])
+      (:require-macros [cljs.core.async.macros :refer [alt! go-loop]])))
 
 (defn sender
   "Takes 4 channels as arguments. Reads data from the input
@@ -9,7 +16,7 @@
   to the output channel, then reads another number from the feed back
   channel. Returns a map of the arguments."
   [input output feedback abort]
-  (async/go-loop [n 0]
+  (go-loop [n 0]
     (let [[val chan] (async/alts! (concat [feedback
                                            abort]
                                           (when (pos? n)
@@ -21,7 +28,7 @@
                            (assert (not (neg? val)))
                            (recur val))
        (= chan input) (when val
-                        (async/alt!
+                        (alt!
                           [[output val]] ([_] (recur (dec n)))
                           abort nil)))))
   {:input input
@@ -38,18 +45,18 @@
   feedback message. `window-size` has an effect similar to buffer size
   for a core.async channel."
   [input output feedback abort window-size timeout]
-  (async/go-loop [n window-size]
+  (go-loop [n window-size]
     (if (> n (dec window-size))
-      (async/alt!
+      (alt!
         abort nil
         [[feedback window-size]] ([_] (recur 0)))
-      (async/alt!
+      (alt!
         input ([item]
                  (when item
-                   (async/alt!
+                   (alt!
                      [[output item]] ([_] (recur (inc n)))
                      abort nil)))
-        (async/timeout timeout) (async/alt!
+        (async/timeout timeout) (alt!
                                   abort nil
                                   [[feedback (- window-size n)]] ([_] (recur n)))
         abort nil)))
