@@ -16,8 +16,8 @@ receiver to window-size.
 
 ## Further reading
 
-https://code.google.com/p/chromium/issues/detail?id=492519
-https://lists.w3.org/Archives/Public/public-whatwg-archive/2013Oct/0217.html
+- https://code.google.com/p/chromium/issues/detail?id=492519
+- https://lists.w3.org/Archives/Public/public-whatwg-archive/2013Oct/0217.html
 
 ## License
 
