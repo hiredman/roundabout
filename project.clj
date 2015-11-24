@@ -1,4 +1,4 @@
-(defproject com.manigfeald/roundabout "0.1.0-SNAPSHOT"
+(defproject com.manigfeald/roundabout "0.1.0"
   :description "A library for flow control"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
