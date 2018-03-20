@@ -1,4 +1,4 @@
-(defproject com.manigfeald/roundabout "0.2.0"
+(defproject com.manigfeald/roundabout "0.3.0-SNAPSHOT"
   :description "A library for flow control"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
@@ -10,4 +10,4 @@
                         :compiler {:output-to "main.js"
                                    :optimizations :none
                                    :pretty-print true}}]}
-  :plugins [[lein-cljsbuild "1.1.1"]])
+  :plugins [[lein-cljsbuild "1.1.7"]])
